@@ -1,0 +1,14 @@
+---
+# file: playbook/portmirror.yml
+##################################
+- hosts: tplink_switch
+  connection: local
+  gather_facts: false
+  vars:
+    cli_admin_user: '{{ t1500g_admin_user }}'
+    cli_admin_pass: '{{ t1500g_admin_pass }}'
+    cli_host:       '{{ ansible_host }}'
+    src_port:       '{{ from_port }}'
+    dst_port:       '{{ to_port }}'
+  roles:
+    - port_mirror

@@ -1,0 +1,76 @@
+---
+# tasks file for port_mirror
+
+- name: Get T1500G port mirroring status
+  telnet:
+    send_newline: true
+    host: '{{ cli_host }}'
+    user: '{{ cli_admin_user }}'
+    password: '{{ cli_admin_pass }}'
+    login_prompt: 'User:'
+    password_prompt: 'Password:'
+    prompts:
+    - 'T1500G-10MPS>'
+    - 'T1500G-10MPS#'
+    - 'T1500G-10MPS(config)#'
+    command:
+    - enable
+    - show monitor session
+    - logout
+  tags:
+  - show
+
+
+- name: Set T1500G port mirroring
+  telnet:
+    send_newline: true
+    host: '{{ cli_host }}'
+    user: '{{ cli_admin_user }}'
+    password: '{{ cli_admin_pass }}'
+    login_prompt: 'User:'
+    password_prompt: 'Password:'
+    prompts:
+    - 'T1500G-10MPS>'
+    - 'T1500G-10MPS#'
+    - 'T1500G-10MPS\(config\)#'
+    command:
+    - enable
+    - configure
+    - monitor session 1 destination interface gigabitEthernet {{ dst_port }}
+    - monitor session 1 source interface gigabitEthernet {{ src_port }} both
+    - exit
+    - exit
+    - exit
+  tags:
+  - start
+  - mirror
+  - set
+  
+- name: Stop T1500G port mirroring
+  telnet:
+    send_newline: true
+    host: '{{ cli_host }}'
+    user: '{{ cli_admin_user }}'
+    password: '{{ cli_admin_pass }}'
+    login_prompt: 'User:'
+    password_prompt: 'Password:'
+    prompts:
+    - 'T1500G-10MPS>'
+    - 'T1500G-10MPS#'
+    - 'T1500G-10MPS\(config\)#'
+    command:
+    - enable
+    - configure
+    - no monitor session 1
+    - exit
+    - exit
+    - exit
+  tags:
+  - stop
+  - unmirror
+  - reset
+  - clear
+
+  
+
+

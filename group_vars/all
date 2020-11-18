@@ -1,0 +1,7 @@
+# t1500g admin credentials
+t1500g_admin_user: admin
+t1500g_admin_pass: admin
+
+# monitored ports
+from_port: 1/0/4
+to_port: 1/0/9

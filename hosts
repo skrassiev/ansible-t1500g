@@ -1,0 +1,4 @@
+[tplink_switch]
+t1500g ansible_host=10.0.0.7
+
+
